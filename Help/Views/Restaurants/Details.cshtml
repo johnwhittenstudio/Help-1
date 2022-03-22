@@ -1,0 +1,85 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Help.Models.Restaurant
+
+<h2>Restaurant Details</h2>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+<h4>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)</h4>
+
+
+@if (@Model.JoinEntries.Count == 0)
+{
+  <p>This restaurant does not belong to any cuisines</p>
+}
+else
+{
+  <h4>Cuisines the restaurant belongs to:</h4>
+  <ul>
+  @foreach (var join in Model.JoinEntries)
+  {
+    if (join.Cuisine != null)
+    {
+      <li>Cuisine: @join.Cuisine.Type</li>
+
+      @using (Html.BeginForm("DeleteCuisine", "Restaurants"))
+      {
+        @Html.Hidden("joinId", @join.CityCuisinePriceRestaurantId)
+        <input type="submit" value="Delete" />
+      }
+    }
+  }
+  </ul>
+}
+  
+
+
+@if (@Model.JoinEntries.Count == 0)
+{
+  <p>This restaurant does not belong to any price points</p>
+}
+else
+{
+  <h4>Price points the restaurant belongs to:</h4>
+  <ul>
+  @foreach (var join in Model.JoinEntries)
+    {
+      <li>@join.Price.DollarSigns</li>
+      @using (Html.BeginForm("DeletePrice", "Restaurants"))
+      {
+        @Html.Hidden("joinId", @join.PriceId)
+        <input type="submit" value="Delete" />
+      }
+    }
+  </ul>
+}
+
+@if (@Model.JoinEntries.Count == 0)
+{
+  <p>This restaurant does not belong to any cities</p>
+}
+else
+{
+  <h4>City the restaurant belongs to:</h4>
+  <ul>
+  @foreach (var join in Model.JoinEntries)
+    {
+      <li>@join.City.Name</li>
+      @using (Html.BeginForm("DeleteCity", "Restaurants"))
+      {
+        @Html.Hidden("joinId", @join.CityId)
+        <input type="submit" value="Delete" />
+      }
+    }
+  </ul>
+}
+
+<p>@Html.ActionLink("Add a Cuisine", "AddCuisine", new { id = Model.RestaurantId })</p>
+<p>@Html.ActionLink("Add a Price Point", "AddPrice", new { id = Model.RestaurantId })</p>
+<p>@Html.ActionLink("Add a City", "AddCity", new { id = Model.RestaurantId })</p>
+
+<p>@Html.ActionLink("Back to list", "Index")</p>
+<p>@Html.ActionLink("Edit Restaurant", "Edit", new { id = Model.RestaurantId })</p>
+<p>@Html.ActionLink("Delete Restaurant", "Delete", new { id = Model.RestaurantId })</p>

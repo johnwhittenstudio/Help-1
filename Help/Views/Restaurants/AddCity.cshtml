@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Help.Models.Restaurant
+
+<h2>Add a city</h2>
+
+<h4>Add a city to this restaurant: @Html.DisplayFor(model => model.Name)</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.RestaurantId)
+
+    @Html.Label("Select city")
+    @Html.DropDownList("CityId")
+
+    <input type="submit" value="Save" />
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>

@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Help.Models.City
+
+<h2>City Details</h2>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)<h3>
+<h3>@Html.DisplayNameFor(model => model.State): @Html.DisplayFor(model => model.State)<h3></h3>
+
+<br>
+<p>@Html.ActionLink("Back to Cities", "Index")</p>
+<p>@Html.ActionLink("Edit City", "Edit", new { id = Model.CityId })</p>
+<p>@Html.ActionLink("Delete City", "Delete", new { id = Model.CityId })</p>

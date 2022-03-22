@@ -1,0 +1,14 @@
+Home Index > branch to Owners and Users
+
+
+Owners
+Create the Restaurant Name, Price Point, Cuisine, City
+
+
+
+Restaurant Name is the common point between User and Owners
+
+
+Users
+Review the Restaurant selected from Name dropdown?
+Leave Rating

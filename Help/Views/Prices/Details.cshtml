@@ -1,0 +1,14 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Help.Models.Price
+
+<h2>Price Point Details</h2>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.DollarSigns): @Html.DisplayFor(model => model.DollarSigns)<h3>
+
+<br>
+<p>@Html.ActionLink("Back to Price Points", "Index")</p>
+<p>@Html.ActionLink("Edit Price Point", "Edit", new { id = Model.PriceId })</p>
+<p>@Html.ActionLink("Delete Price Point", "Delete", new { id = Model.PriceId })</p>

@@ -1,0 +1,22 @@
+@{
+  Layout = "_Layout";
+}
+
+@using Help.Models; 
+
+<h1>Cities</h1>
+
+@if (@Model.Count == 0)
+{
+  <h3>No cities have been added yet!</h3>
+} 
+
+<ul>
+  @foreach(City city in Model)
+  {
+    <li>@Html.ActionLink($"{city.Name}", "Details", new { id = city.CityId })</li>
+  }
+</ul>
+
+<p>@Html.ActionLink("Add New City", "Create")</p>
+<p>@Html.ActionLink("Home", "Index", "Home")</p>

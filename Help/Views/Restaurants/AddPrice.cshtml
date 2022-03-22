@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Help.Models.Restaurant
+
+<h2>Add a price</h2>
+
+<h4>Add a price point to this restaurant: @Html.DisplayFor(model => model.Name)</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.RestaurantId)
+
+    @Html.Label("Select price point")
+    @Html.DropDownList("PriceId")
+
+    <input type="submit" value="Save" />
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>

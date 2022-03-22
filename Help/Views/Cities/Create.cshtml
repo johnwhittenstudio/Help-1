@@ -1,0 +1,19 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Help.Models.City
+
+<h4>Add a New City</h4>
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(model => model.Name)
+  @Html.TextBoxFor(model => model.Name)
+
+  @Html.LabelFor(model => model.State)
+  @Html.TextBoxFor(model => model.State)
+
+
+  <button type="submit" class="btn btn-primary" style="width:250px">Add New Cities</button>
+}
+<p>@Html.ActionLink("Show all Cities", "Index")</p>

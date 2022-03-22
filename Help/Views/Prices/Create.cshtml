@@ -1,0 +1,16 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Help.Models.Price
+
+<h4>Add a New Price Point</h4>
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(model => model.DollarSigns)
+  @Html.TextBoxFor(model => model.DollarSigns)
+
+
+  <button type="submit" class="btn btn-primary" style="width:250px">Add New Price Points</button>
+}
+<p>@Html.ActionLink("Show all Price Points", "Index")</p>

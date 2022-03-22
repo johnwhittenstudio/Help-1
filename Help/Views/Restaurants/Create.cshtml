@@ -1,0 +1,42 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Help.Models.Restaurant
+
+<h2>Add a New Restaurant</h2>
+
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(model => model.Name)
+  @Html.TextBoxFor(model => model.Name)
+
+  @Html.LabelFor(model => model.Description)
+  @Html.TextBoxFor(model => model.Description)
+
+  @Html.Label("Select cuisine")
+  @Html.DropDownList("CuisineId")
+
+  @Html.Label("Select city")
+  @Html.DropDownList("CityId")
+
+  @Html.Label("Select price point")
+  @Html.DropDownList("PriceId")
+
+  /* @Html.LabelFor(model => model.Cuisine)
+  @Html.DropDownList("CuisineId")
+
+  @Html.LabelFor(model => model.Price)
+  @Html.DropDownList("PriceId")
+
+  @Html.LabelFor(model => model.City)
+  @Html.DropDownList("CityId") */
+  <br>
+  <button type="submit" class="btn btn-primary" style="width:200px">Add New Restaurants</button>
+}
+<br>
+<h5>Can't find the city? &nbsp @Html.ActionLink("Add City", "Create", "Cities")</h5>
+<h5>Can't find the cuisine? &nbsp @Html.ActionLink("Add Cuisine", "Index", "Cuisines")</h5>
+<h5>Can't find the price point? &nbsp @Html.ActionLink("Add Price", "Index", "Prices")</h5>
+<br>
+<p>@Html.ActionLink("Show all restaurants", "Index")</p>
