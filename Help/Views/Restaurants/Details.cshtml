@@ -30,7 +30,7 @@ else
         <input type="submit" value="Delete" />
       }
     }
-  }
+  }  
   </ul>
 }
   
@@ -46,13 +46,16 @@ else
   <ul>
   @foreach (var join in Model.JoinEntries)
     {
-      <li>@join.Price.DollarSigns</li>
+    if (join.Price != null)
+    {
+      <li>PricePoint: @join.Price.DollarSigns</li>
       @using (Html.BeginForm("DeletePrice", "Restaurants"))
       {
         @Html.Hidden("joinId", @join.PriceId)
         <input type="submit" value="Delete" />
       }
     }
+  }
   </ul>
 }
 
@@ -66,13 +69,16 @@ else
   <ul>
   @foreach (var join in Model.JoinEntries)
     {
-      <li>@join.City.Name</li>
+    if (join.City != null)
+    {
+      <li>City: @join.City.Name</li>
       @using (Html.BeginForm("DeleteCity", "Restaurants"))
       {
         @Html.Hidden("joinId", @join.CityId)
         <input type="submit" value="Delete" />
       }
     }
+  }
   </ul>
 }
 
