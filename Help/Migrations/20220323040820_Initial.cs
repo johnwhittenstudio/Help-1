@@ -67,6 +67,7 @@ namespace Help.Migrations
                 {
                     ReviewId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Headline = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     Description = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     Rating = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true)
                 },
@@ -81,10 +82,10 @@ namespace Help.Migrations
                 {
                     CityCuisinePriceRestaurantId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    CuisineId = table.Column<int>(type: "int", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    CuisineId = table.Column<int>(type: "int", nullable: true),
                     PriceId = table.Column<int>(type: "int", nullable: true),
-                    RestaurantId = table.Column<int>(type: "int", nullable: true)
+                    RestaurantId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,13 +95,13 @@ namespace Help.Migrations
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "CityId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CityCuisinePriceRestaurants_Cuisines_CuisineId",
                         column: x => x.CuisineId,
                         principalTable: "Cuisines",
                         principalColumn: "CuisineId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CityCuisinePriceRestaurants_Prices_PriceId",
                         column: x => x.PriceId,
@@ -112,7 +113,7 @@ namespace Help.Migrations
                         column: x => x.RestaurantId,
                         principalTable: "Restaurants",
                         principalColumn: "RestaurantId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

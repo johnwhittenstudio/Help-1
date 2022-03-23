@@ -3,11 +3,12 @@
 }
 
 @model Help.Models.Review
-
+<br>
 <h2>Review Details</h2>
 <hr />
-<h3>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)<h3>
-<h3>@Html.DisplayNameFor(model => model.Rating): @Html.DisplayFor(model => model.Rating)<h3>
+<h3>@Html.DisplayNameFor(model => model.Headline): @Html.DisplayFor(model => model.Headline)<h3>
+<h4>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)<h4>
+<h5>@Html.DisplayNameFor(model => model.Rating): @Html.DisplayFor(model => model.Rating)<h5>
 
 <br>
 <p>@Html.ActionLink("Back to Reviews", "Index")</p>

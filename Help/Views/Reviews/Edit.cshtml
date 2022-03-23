@@ -3,7 +3,7 @@
 }
 
 @model Help.Models.Review;
-
+<br>
 <h2>Edit</h2>
 
 <h4>Edit this Review: @Html.DisplayFor(model => model.Description)</h4>
@@ -11,6 +11,9 @@
 @using (Html.BeginForm())
 {
   @Html.HiddenFor(model => model.ReviewId)
+
+  @Html.LabelFor(model => model.Headline)
+  @Html.EditorFor(model => model.Headline)
 
   @Html.LabelFor(model => model.Description)
   @Html.EditorFor(model => model.Description)

@@ -3,13 +3,13 @@
 }
 
 @model Help.Models.Restaurant
-
+<br>
 <h2>Restaurant Details</h2>
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
 <h4>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)</h4>
 
-
+<br>
 @if (@Model.JoinEntries.Count == 0)
 {
   <p>This restaurant does not belong to any cuisines</p>

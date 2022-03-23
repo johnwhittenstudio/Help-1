@@ -4,7 +4,7 @@
 
 @using Help.Models;
 @model List<Help.Models.Review>;
-
+<br>
 <h1>Reviews</h1>
 
 @if (@Model.Count == 0)
@@ -14,8 +14,8 @@
 
 @foreach (Review review in Model)
 {
-  <li>@Html.ActionLink($"{review.Description}", "Details", new { id = review.ReviewId })</li>
+  <li>@Html.ActionLink($"{review.Headline}", "Details", new { id = review.ReviewId })</li>
 }
-
+<br>
 <p>@Html.ActionLink("Add your review", "Create")</p>
 <p>@Html.ActionLink("Home", "Index", "Home")</p>

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Help.Migrations
 {
     [DbContext(typeof(HelpContext))]
-    [Migration("20220322020803_Initial")]
+    [Migration("20220323040820_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,16 +42,16 @@ namespace Help.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CityId")
+                    b.Property<int?>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CuisineId")
+                    b.Property<int?>("CuisineId")
                         .HasColumnType("int");
 
                     b.Property<int?>("PriceId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RestaurantId")
+                    b.Property<int>("RestaurantId")
                         .HasColumnType("int");
 
                     b.HasKey("CityCuisinePriceRestaurantId");
@@ -142,6 +142,9 @@ namespace Help.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("Headline")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("Rating")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -154,15 +157,11 @@ namespace Help.Migrations
                 {
                     b.HasOne("Help.Models.City", "City")
                         .WithMany("Restaurants")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CityId");
 
                     b.HasOne("Help.Models.Cuisine", "Cuisine")
                         .WithMany("Restaurants")
-                        .HasForeignKey("CuisineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CuisineId");
 
                     b.HasOne("Help.Models.Price", "Price")
                         .WithMany("Restaurants")
@@ -170,7 +169,9 @@ namespace Help.Migrations
 
                     b.HasOne("Help.Models.Restaurant", "Restaurant")
                         .WithMany("JoinEntries")
-                        .HasForeignKey("RestaurantId");
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("City");
 

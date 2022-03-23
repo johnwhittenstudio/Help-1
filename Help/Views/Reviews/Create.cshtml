@@ -3,7 +3,7 @@
 }
 
 @model Help.Models.Review
-
+<br>
 <h2>Add a New Review</h2>
 
 @using (Html.BeginForm())
@@ -11,6 +11,9 @@
 
   @Html.Label("Select restaurant")
   @Html.DropDownList("RestaurantId")
+
+  @Html.LabelFor(model => model.Headline)
+  @Html.TextBoxFor(model => model.Headline)
 
   @Html.LabelFor(model => model.Description)
   @Html.TextBoxFor(model => model.Description)
