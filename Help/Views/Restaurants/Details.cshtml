@@ -5,10 +5,15 @@
 @model Help.Models.Restaurant
 <br>
 <h2>Restaurant Details</h2>
-<hr />
-<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
-<h4>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)</h4>
+<div class="home">
+  <div class="card border-secondary mb-3 mt-5" style="max-width: 80rem;">
+    <div class="card-header"><h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3></div>
+    <div class="card-body">
 
+
+
+<h4>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)</h4>
+<hr />
 <br>
 @if (@Model.JoinEntries.Count == 0)
 {
@@ -85,7 +90,9 @@ else
 <p>@Html.ActionLink("Add a Cuisine", "AddCuisine", new { id = Model.RestaurantId })</p>
 <p>@Html.ActionLink("Add a Price Point", "AddPrice", new { id = Model.RestaurantId })</p>
 <p>@Html.ActionLink("Add a City", "AddCity", new { id = Model.RestaurantId })</p>
-
+    </div>
+  </div>   
+</div>  
 <p>@Html.ActionLink("Back to list", "Index")</p>
 <p>@Html.ActionLink("Edit Restaurant", "Edit", new { id = Model.RestaurantId })</p>
 <p>@Html.ActionLink("Delete Restaurant", "Delete", new { id = Model.RestaurantId })</p>
