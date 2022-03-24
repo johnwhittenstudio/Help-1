@@ -4,8 +4,8 @@ namespace Help.Models
   {
     public int RestaurantReviewId { get; set; }
     public int RestaurantId { get; set; }
-    public Restaurant Restaurant { get; set; }
     public int ReviewId { get; set; }
-    public Review Review { get; set; }
+    public virtual Restaurant Restaurant { get; set; }
+    public virtual Review Review { get; set; }
   }
 }

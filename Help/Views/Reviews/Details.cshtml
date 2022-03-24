@@ -3,9 +3,14 @@
 }
 
 @model Help.Models.Review
+@* @using Help.Models *@
 <br>
 <h2>Review Details</h2>
 <hr />
+  @foreach(var join in Model.JoinEntries)
+  {
+    <h2>@Html.ActionLink(@join.Restaurant.Name, "Details", "Restaurants", new { id = join.RestaurantId})</h2>
+  }
 <h3>@Html.DisplayNameFor(model => model.Headline): @Html.DisplayFor(model => model.Headline)<h3>
 <h4>@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(model => model.Description)<h4>
 <h5>@Html.DisplayNameFor(model => model.Rating): @Html.DisplayFor(model => model.Rating)<h5>

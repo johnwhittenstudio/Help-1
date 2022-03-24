@@ -42,7 +42,7 @@ namespace Help.Controllers
 
     public ActionResult Details(int id)
     {
-      Review thisReview = _db.Reviews
+      var thisReview = _db.Reviews
           .Include(review => review.JoinEntries)
           .ThenInclude(join => join.Restaurant)
           .FirstOrDefault(review => review.ReviewId == id);

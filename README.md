@@ -71,7 +71,7 @@ An app for a user to review restaurants in various cities.
 
 ## Known Bugs
 
-- _None._
+- _Would like to get the restaurant name to display in the Reviews/Details View._
 
 ## License
 
