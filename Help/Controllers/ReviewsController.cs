@@ -4,9 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Help.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace Help.Controllers
 {
+  [Authorize]
   public class ReviewsController : Controller
   {
     private readonly HelpContext _db;
@@ -15,7 +20,7 @@ namespace Help.Controllers
     {
       _db = db;
     }
-
+    [AllowAnonymous]
     public ActionResult Index()
     {
       return View(_db.Reviews.ToList());

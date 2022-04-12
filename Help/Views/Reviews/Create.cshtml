@@ -13,13 +13,13 @@
   @Html.DropDownList("RestaurantId")
 
   @Html.LabelFor(model => model.Headline)
-  @Html.TextBoxFor(model => model.Headline)
+  @Html.TextBoxFor(model => model.Headline, new { @required  = "required"})
 
   @Html.LabelFor(model => model.Description)
-  @Html.TextBoxFor(model => model.Description)
+  @Html.TextBoxFor(model => model.Description, new { @required  = "required"})
 
   @Html.LabelFor(model => model.Rating)
-  @Html.TextBoxFor(model => model.Rating)
+  @Html.TextBoxFor(model => model.Rating, new { @required  = "required"})
 
   /* @Html.LabelFor(model => model.Restaurant)
   @Html.DropDownList("RestaurantId") */

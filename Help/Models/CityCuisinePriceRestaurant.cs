@@ -4,12 +4,12 @@ namespace Help.Models
   {
     public int CityCuisinePriceRestaurantId { get; set; }
     public int? CityId { get; set; }
-    public City City { get; set; }
+    public virtual City City { get; set; }
     public int? CuisineId { get; set; }
-    public Cuisine Cuisine { get; set; }
+    public virtual Cuisine Cuisine { get; set; }
     public int? PriceId { get; set; }
-    public Price Price { get; set; }
+    public virtual Price Price { get; set; }
     public int RestaurantId { get; set; }
-    public Restaurant Restaurant { get; set; }
+    public virtual Restaurant Restaurant { get; set; }
   }
 }

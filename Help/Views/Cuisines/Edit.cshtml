@@ -13,7 +13,7 @@
   @Html.HiddenFor(model => model.CuisineId)
 
   @Html.LabelFor(model => model.Type)
-  @Html.EditorFor(model => model.Type)
+  @Html.EditorFor(model => model.Type, new { @required  = "required"})
 
   <input type="submit" value="Save" />
 }

@@ -13,13 +13,13 @@
   @Html.HiddenFor(model => model.ReviewId)
 
   @Html.LabelFor(model => model.Headline)
-  @Html.EditorFor(model => model.Headline)
+  @Html.EditorFor(model => model.Headline, new { @required  = "required"})
 
   @Html.LabelFor(model => model.Description)
-  @Html.EditorFor(model => model.Description)
+  @Html.EditorFor(model => model.Description, new { @required  = "required"})
 
   @Html.LabelFor(model => model.Rating)
-  @Html.EditorFor(model => model.Rating)
+  @Html.EditorFor(model => model.Rating, new { @required  = "required"})
 
   <input type="submit" value="Save" />
 }

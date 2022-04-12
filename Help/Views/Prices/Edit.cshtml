@@ -13,7 +13,7 @@
   @Html.HiddenFor(model => model.PriceId)
 
   @Html.LabelFor(model => model.DollarSigns)
-  @Html.EditorFor(model => model.DollarSigns)
+  @Html.EditorFor(model => model.DollarSigns, new { @required  = "required"})
 
   <input type="submit" value="Save" />
 }

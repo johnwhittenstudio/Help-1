@@ -13,10 +13,10 @@
   @Html.HiddenFor(model => model.CityId)
 
   @Html.LabelFor(model => model.Name)
-  @Html.EditorFor(model => model.Name)
+  @Html.EditorFor(model => model.Name, new { @required  = "required"})
 
   @Html.LabelFor(model => model.State)
-  @Html.EditorFor(model => model.State)
+  @Html.EditorFor(model => model.State, new { @required  = "required"})
 
   <input type="submit" value="Save" />
 }
