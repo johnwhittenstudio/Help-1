@@ -11,6 +11,7 @@ namespace Help.Models
 
         public int PriceId { get; set; }
         public string DollarSigns { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public virtual ICollection<CityCuisinePriceRestaurant> Restaurants { get; set; }
     }
 }

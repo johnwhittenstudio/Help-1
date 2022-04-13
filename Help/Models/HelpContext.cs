@@ -9,7 +9,6 @@ namespace Help.Models
     public DbSet<Cuisine> Cuisines { get; set; }
     public DbSet<Price> Prices { get; set; }
     public DbSet<Restaurant> Restaurants { get; set; }
-
     public DbSet<Review> Reviews { get; set; }
     public DbSet<CityCuisinePriceRestaurant> CityCuisinePriceRestaurants { get; set; }
 

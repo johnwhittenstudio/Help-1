@@ -1,10 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using Help.Models;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
@@ -14,11 +15,15 @@ namespace Help.Controllers
   public class PricesController : Controller
   {
     private readonly HelpContext _db;
+    private readonly UserManager<ApplicationUser> _userManager; 
 
-    public PricesController(HelpContext db)
+    public PricesController(UserManager<ApplicationUser> userManager, HelpContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
+
+
     [AllowAnonymous]
     public ActionResult Index()
     {
@@ -31,9 +36,13 @@ namespace Help.Controllers
       return View();
     }
 
+
     [HttpPost]
-    public ActionResult Create(Price price)
+    public async Task<ActionResult> Create(Price price)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      price.User = currentUser;
       _db.Prices.Add(price);
       _db.SaveChanges();
       return RedirectToAction("Index");

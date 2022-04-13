@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using Help.Models;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
@@ -15,15 +15,17 @@ namespace Help.Controllers
   public class RestaurantsController : Controller
   {
     private readonly HelpContext _db;
-
-    public RestaurantsController(HelpContext db)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public RestaurantsController(UserManager<ApplicationUser> userManager, HelpContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
+
     [AllowAnonymous]
     public ActionResult Index()
     {
-      return View(_db.Restaurants.ToList());
+      return View(_db.Restaurants.OrderBy(x => x.Name).ToList());
     }
 
     public ActionResult Create()
@@ -34,10 +36,29 @@ namespace Help.Controllers
       return View();
     }
 
+
     [HttpPost]
-    public ActionResult Create(Restaurant restaurant, int CityId, int CuisineId, int PriceId)
+    public async Task<ActionResult> Create(Restaurant restaurant, int CityId, int CuisineId, int PriceId)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      restaurant.User = currentUser;
       _db.Restaurants.Add(restaurant);
+      _db.SaveChanges();
+      if (CityId != 0)
+      {
+        _db.CityCuisinePriceRestaurants.Add(new CityCuisinePriceRestaurant() { CityId = CityId, RestaurantId = restaurant.RestaurantId });
+      }
+      _db.SaveChanges();
+      if (CuisineId != 0)
+      {
+        _db.CityCuisinePriceRestaurants.Add(new CityCuisinePriceRestaurant() { CuisineId = CuisineId, RestaurantId = restaurant.RestaurantId });
+      }
+      _db.SaveChanges();
+      if (PriceId != 0)
+      {
+        _db.CityCuisinePriceRestaurants.Add(new CityCuisinePriceRestaurant() { PriceId = PriceId, RestaurantId = restaurant.RestaurantId });
+      }
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
@@ -74,7 +95,7 @@ namespace Help.Controllers
 
 
 
-///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
     public ActionResult AddCity(int id)
     {
       Restaurant thisRestaurant = _db.Restaurants.FirstOrDefault(restaurants => restaurants.RestaurantId == id);
@@ -130,7 +151,7 @@ namespace Help.Controllers
     }
 
 
-///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
 
     public ActionResult Delete(int id)
@@ -147,5 +168,35 @@ namespace Help.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+
+    [HttpPost]
+    public ActionResult DeletePrice(int joinId)
+    {
+      var thisPrice = _db.CityCuisinePriceRestaurants.FirstOrDefault(entry => entry.CityCuisinePriceRestaurantId == joinId);
+      _db.CityCuisinePriceRestaurants.Remove(thisPrice);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public ActionResult DeleteCuisine(int joinId)
+    {
+      var thisCuisine = _db.CityCuisinePriceRestaurants.FirstOrDefault(entry => entry.CityCuisinePriceRestaurantId == joinId);
+      _db.CityCuisinePriceRestaurants.Remove(thisCuisine);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public ActionResult DeleteCity(int joinId)
+    {
+      var thisCity = _db.CityCuisinePriceRestaurants.FirstOrDefault(entry => entry.CityCuisinePriceRestaurantId == joinId);
+      _db.CityCuisinePriceRestaurants.Remove(thisCity);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+
   }
 }

@@ -12,7 +12,8 @@ namespace Help.Models
         public int ReviewId { get; set; }
         public string Headline { get; set; }
         public string Description { get; set; }
-        public string Rating { get; set; }
-        public ICollection<RestaurantReview> JoinEntries { get; }
+        public int Rating { get; set; }
+        public virtual ApplicationUser User { get; set; }
+        public virtual ICollection<RestaurantReview> JoinEntries { get; }
     }
 }

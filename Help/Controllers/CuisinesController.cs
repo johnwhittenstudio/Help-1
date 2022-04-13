@@ -1,10 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using Help.Models;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
@@ -14,15 +15,19 @@ namespace Help.Controllers
   public class CuisinesController : Controller
   {
     private readonly HelpContext _db;
+    private readonly UserManager<ApplicationUser> _userManager; 
 
-    public CuisinesController(HelpContext db)
+    public CuisinesController(UserManager<ApplicationUser> userManager, HelpContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
+
+
     [AllowAnonymous]
     public ActionResult Index()
     {
-      List<Cuisine> model = _db.Cuisines.ToList();
+      List<Cuisine> model = _db.Cuisines.OrderBy(x => x.Type).ToList();
       return View(model);
     }
 
@@ -31,24 +36,31 @@ namespace Help.Controllers
       return View();
     }
 
+
     [HttpPost]
-    public ActionResult Create(Cuisine cuisine)
+    public async Task<ActionResult> Create(Cuisine cuisine)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      cuisine.User = currentUser;
       _db.Cuisines.Add(cuisine);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
 
     public ActionResult Details(int id)
     {
       Cuisine thisCuisine = _db.Cuisines.FirstOrDefault(cuisine => cuisine.CuisineId == id);
       return View(thisCuisine);
     }
+
     public ActionResult Edit(int id)
     {
       var thisCuisine = _db.Cuisines.FirstOrDefault(cuisine => cuisine.CuisineId == id);
       return View(thisCuisine);
     }
+
 
     [HttpPost]
     public ActionResult Edit(Cuisine cuisine)

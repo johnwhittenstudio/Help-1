@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using Help.Models;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
@@ -15,15 +15,20 @@ namespace Help.Controllers
   public class ReviewsController : Controller
   {
     private readonly HelpContext _db;
+    private readonly UserManager<ApplicationUser> _userManager; 
 
-    public ReviewsController(HelpContext db)
+    public ReviewsController(UserManager<ApplicationUser> userManager, HelpContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
+
+
     [AllowAnonymous]
     public ActionResult Index()
     {
       return View(_db.Reviews.ToList());
+      // return View(_db.Reviews.Average(x => (double?)x.Rating) ?? 0);
     }
 
     public ActionResult Create()
@@ -32,16 +37,20 @@ namespace Help.Controllers
       return View();
     }
 
+
     [HttpPost]
-    public ActionResult Create(Review review, int RestaurantId)
+    public async Task<ActionResult> Create(Review review, int RestaurantId)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      review.User = currentUser;
       _db.Reviews.Add(review);
       _db.SaveChanges();
       if (RestaurantId != 0)
       {
         _db.RestaurantReviews.Add(new RestaurantReview() { RestaurantId = RestaurantId, ReviewId = review.ReviewId });
-        _db.SaveChanges();
       }
+        _db.SaveChanges();
       return RedirectToAction("Index");
     }
 

@@ -3,14 +3,16 @@
 }
 
 @model Help.Models.Cuisine
-
+<br>
 <h4>Add a New Cuisine</h4>
 @using (Html.BeginForm())
 {
   @Html.LabelFor(model => model.Type)
+  <span> &nbsp; </span>
   @Html.TextBoxFor(model => model.Type, new { @required  = "required"})
 
-
-  <button type="submit" class="btn btn-primary" style="width:250px">Add New Cuisines</button>
+  <span> &nbsp; </span>
+  <button type="submit" class="btn btn-primary" >Add New Cuisines</button>
 }
+<span> &nbsp; </span>
 <p>@Html.ActionLink("Show all Cuisines", "Index")</p>

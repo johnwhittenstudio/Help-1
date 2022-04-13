@@ -1,10 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using Help.Models;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
@@ -14,11 +15,15 @@ namespace Help.Controllers
   public class CitiesController : Controller
   {
     private readonly HelpContext _db;
+    private readonly UserManager<ApplicationUser> _userManager; 
 
-    public CitiesController(HelpContext db)
+    public CitiesController(UserManager<ApplicationUser> userManager, HelpContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
+
+
     [AllowAnonymous]
     public ActionResult Index()
     {
@@ -31,19 +36,25 @@ namespace Help.Controllers
       return View();
     }
 
+
     [HttpPost]
-    public ActionResult Create(City city)
+    public async Task<ActionResult> Create(City city)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      city.User = currentUser;
       _db.Cities.Add(city);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
 
     public ActionResult Details(int id)
     {
       City thisCity = _db.Cities.FirstOrDefault(city => city.CityId == id);
       return View(thisCity);
     }
+    
     public ActionResult Edit(int id)
     {
       var thisCity = _db.Cities.FirstOrDefault(city => city.CityId == id);

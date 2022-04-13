@@ -3,14 +3,16 @@ using System;
 using Help.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Help.Migrations
 {
     [DbContext(typeof(HelpContext))]
-    partial class HelpContextModelSnapshot : ModelSnapshot
+    [Migration("20220413025809_addIdentity")]
+    partial class addIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,13 +111,13 @@ namespace Help.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CityId")
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CuisineId")
+                    b.Property<int>("CuisineId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PriceId")
+                    b.Property<int>("PriceId")
                         .HasColumnType("int");
 
                     b.Property<int>("RestaurantId")
@@ -381,15 +383,21 @@ namespace Help.Migrations
                 {
                     b.HasOne("Help.Models.City", "City")
                         .WithMany("Restaurants")
-                        .HasForeignKey("CityId");
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Help.Models.Cuisine", "Cuisine")
                         .WithMany("Restaurants")
-                        .HasForeignKey("CuisineId");
+                        .HasForeignKey("CuisineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Help.Models.Price", "Price")
                         .WithMany("Restaurants")
-                        .HasForeignKey("PriceId");
+                        .HasForeignKey("PriceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Help.Models.Restaurant", "Restaurant")
                         .WithMany("JoinEntries")

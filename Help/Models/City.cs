@@ -12,6 +12,7 @@ namespace Help.Models
         public int CityId { get; set; }
         public string Name { get; set; }
         public string State { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public virtual ICollection<CityCuisinePriceRestaurant> Restaurants { get; set; }
     }
 }
