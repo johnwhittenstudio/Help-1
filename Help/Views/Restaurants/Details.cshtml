@@ -21,13 +21,13 @@
 }
 else
 {
-  <h4>Cuisines the restaurant belongs to:</h4>
-  <ul>
+  @* <h4>Cuisines the restaurant belongs to:</h4> *@
+
   @foreach (var join in Model.JoinEntries)
   {
     if (join.Cuisine != null)
     {
-      <li>Cuisine: @join.Cuisine.Type</li>
+      <h3> @join.Cuisine.Type <em>cuisine</em></h3>
 
       @using (Html.BeginForm("DeleteCuisine", "Restaurants"))
       {
@@ -36,10 +36,9 @@ else
       }
     }
   }  
-  </ul>
 }
   
-
+&nbsp;
 
 @if (@Model.JoinEntries.Count == 0)
 {
@@ -47,22 +46,23 @@ else
 }
 else
 {
-  <h4>Price points the restaurant belongs to:</h4>
-  <ul>
+  @* <h4>Price points the restaurant belongs to:</h4> *@
+
   @foreach (var join in Model.JoinEntries)
     {
     if (join.Price != null)
     {
-      <li>PricePoint: @join.Price.DollarSigns</li>
+      <h3> @join.Price.DollarSigns <em>price point</em></h3>
       @using (Html.BeginForm("DeletePrice", "Restaurants"))
       {
-        @Html.Hidden("joinId", @join.PriceId)
+        @Html.Hidden("joinId", @join.CityCuisinePriceRestaurantId)
         <input type="submit" value="Delete" />
       }
     }
   }
-  </ul>
 }
+
+&nbsp;
 
 @if (@Model.JoinEntries.Count == 0)
 {
@@ -70,26 +70,27 @@ else
 }
 else
 {
-  <h4>City the restaurant belongs to:</h4>
-  <ul>
+  @* <h4>City the restaurant belongs to:</h4> *@
+
   @foreach (var join in Model.JoinEntries)
     {
     if (join.City != null)
     {
-      <li>City: @join.City.Name</li>
+      <h2> @join.City.Name, @join.City.State <em>location</em></h2>
       @using (Html.BeginForm("DeleteCity", "Restaurants"))
       {
-        @Html.Hidden("joinId", @join.CityId)
+        @Html.Hidden("joinId", @join.CityCuisinePriceRestaurantId)
         <input type="submit" value="Delete" />
       }
     }
   }
-  </ul>
 }
 
-<p>@Html.ActionLink("Add a Cuisine", "AddCuisine", new { id = Model.RestaurantId })</p>
-<p>@Html.ActionLink("Add a Price Point", "AddPrice", new { id = Model.RestaurantId })</p>
-<p>@Html.ActionLink("Add a City", "AddCity", new { id = Model.RestaurantId })</p>
+&nbsp;
+
+<p>@Html.ActionLink("Add a Cuisine", "AddCuisine", new { id = Model.RestaurantId }) &nbsp;
+@Html.ActionLink("Add a Price Point", "AddPrice", new { id = Model.RestaurantId }) &nbsp;
+@Html.ActionLink("Add a City", "AddCity", new { id = Model.RestaurantId })</p>
     </div>
   </div>   
 </div>  
